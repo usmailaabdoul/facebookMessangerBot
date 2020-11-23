@@ -28,9 +28,9 @@ router.post('/webhook', async (req, res, next) => {
       entry.messaging.forEach(function (event) {
         console.log(event);
         if (event.postback) {
-          // webhookServices
+          webhookServices.postbackEvent(event);
         } else if (event.message) {
-          // webhookServices
+          webhookServices.messageEvent(event);
         }
       });
     });
