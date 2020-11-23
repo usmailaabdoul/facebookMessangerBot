@@ -24,7 +24,9 @@ router.post('/webhook', async (req, res, next) => {
     /* Iterate over each entry, there can be multiple entries 
     if callbacks are batched. */
     req.body.entry.forEach(function (entry) {
-      // Iterate over each messaging event
+      
+      // Gets the message. entry.messaging is an array, but 
+      // will only ever contain one message, so we get index 0
       entry.messaging.forEach(function (event) {
         console.log(event);
         if (event.postback) {
@@ -35,6 +37,9 @@ router.post('/webhook', async (req, res, next) => {
       });
     });
     res.sendStatus(200);
+  } else {
+    // Returns a '404 Not Found' if event is not from a page subscription
+    res.sendStatus(404).json('Something unexpected happened');
   }
 });
 
