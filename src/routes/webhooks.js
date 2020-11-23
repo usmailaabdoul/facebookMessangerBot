@@ -13,6 +13,10 @@ router.get('/webhook', async (req, res, next) => {
   }
 });
 
+router.post('/ping', async (req, res, next) => {
+    res.status(200).json('pong!!!');
+});
+
 router.post('/webhook', async (req, res, next) => {
   //checking for page subscription.
   if (req.body.object === 'page') {
