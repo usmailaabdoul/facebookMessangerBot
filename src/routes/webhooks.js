@@ -45,10 +45,10 @@ router.post('/webhook', async (req, res, next) => {
 
       entry.messaging.forEach((event) => {
         if (event.postback) {
-          console.log(event);
-          // webhookServices.postbackEvent(event);
+          console.log({event});
+          webhookServices.postbackEvent(event);
         } else if (event.message) {
-          // webhookServices.messageEvent(event);
+          webhookServices.messageEvent(event);
         }
       });
     });

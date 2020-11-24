@@ -6,7 +6,7 @@ class WebhookHelpers {
   isTyping(recipientId) {
     request({
       url: "https://graph.facebook.com/v2.6/me/messages",
-      qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
+      qs: { access_token: process.env.VERIFY_TOKEN },
       method: "POST",
       json: {
         recipient: { id: recipientId },
@@ -24,7 +24,7 @@ class WebhookHelpers {
       request({
         url: "https://graph.facebook.com/v2.6/me/messages",
         qs: {
-          access_token: process.env.PAGE_ACCESS_TOKEN
+          access_token: process.env.VERIFY_TOKEN
         },
         method: "POST",
         json: {
@@ -66,7 +66,7 @@ class WebhookHelpers {
     }
     request({
         url: 'https://graph.facebook.com/v2.6/me/messages',
-            qs: { access_token: process.env.PAGE_ACCESS_TOKEN },
+            qs: { access_token: process.env.VERIFY_TOKEN },
             method: 'POST',
             json: {
                 recipient: {id: recipientId},
