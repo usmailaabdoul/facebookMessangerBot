@@ -1,4 +1,5 @@
 require('dotenv').config();
+const fetch = require('node-fetch');
 const request = require('request');
 
 class WebhookHelpers {
@@ -79,52 +80,67 @@ class WebhookHelpers {
     })
   }
 
-  buttonTemplate(recipientId) {
+  async buttonTemplate(recipientId) {
     let messageData = {
-      "attachment": {
-        "type": "template",
-        "payload": {
-          "template_type": "button",
-          "text": "What kind of property are you looking for?",
-          "buttons": [
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "What kind of property are you looking for?",
+          buttons: [
             {
-              "type": "postback",
-              "title": "Apartments",
-              "payload": "APARTMENTS"
+              type: "postback",
+              title: "Apartments",
+              payload: "APARTMENTS"
             },
             {
-              "type": "postback",
-              "title": "Studio",
-              "payload": "STUDIO"
+              type: "postback",
+              title: "Studio",
+              payload: "STUDIO"
             },
             {
-              "type": "postback",
-              "title": "Single room",
-              "payload": "SINGLE_ROOM"
+              type: "postback",
+              title: "Single room",
+              payload: "SINGLE_ROOM"
             },
             {
-              "type": "postback",
-              "title": "Store",
-              "payload": "STORE"
+              type: "postback",
+              title: "Store",
+              payload: "STORE"
             },
           ]
         }
       }
     }
-    console.log({recipientId})
-    request({
-      url: 'https://graph.facebook.com/v2.6/me/messages',
-      qs: { access_token: process.env.VERIFY_TOKEN },
-      method: 'POST',
-      json: {
-        recipient: { id: recipientId },
-        message: messageData,
-      }
-    }, function (error, response, body) {
-      if (error) {
-        console.log("Error sending message: " + response.error)
-      }
-    })
+    console.log({ recipientId })
+    // request({
+    //   url: 'https://graph.facebook.com/v2.6/me/messages',
+    //   qs: { access_token: process.env.VERIFY_TOKEN },
+    //   method: 'POST',
+    //   json: {
+    //     recipient: { id: recipientId },
+    //     message: messageData,
+    //   }
+    // }, function (error, response, body) {
+    //   if (error) {
+    //     console.log("Error sending message: " + response.error)
+    //   }
+    // })
+
+    const body = {
+      recipient: { id: recipientId },
+      message: messageData,
+    }
+    const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
+    try {
+      const buttonTemplate = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+    } catch (e) {
+      console.log("Error sending message: " + e)
+    }
   }
 }
 
