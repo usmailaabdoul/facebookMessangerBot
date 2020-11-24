@@ -135,7 +135,7 @@ class WebhookHelpers {
 
     console.log(url)
     try {
-      const buttonTemplate = await fetch(url, {
+      let buttonTemplate = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
