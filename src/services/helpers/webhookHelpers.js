@@ -46,36 +46,83 @@ class WebhookHelpers {
     console.log(responseBody);
     const nutritionalValue = [];
     for (let i = 0; i < responseBody.length; i++) { // I dont like using forEach
-        let obj = {
-            "title":responseBody[i].food_name,
-            "image_url": responseBody[i].thumbnail,
-            "subtitle": 'Total Calories: ' + responseBody[i].total_calories + "\n" + 
-                        'protein: ' + responseBody[i].protein + "\n" + 
-                        'Carbohydrates: ' + responseBody[i].total_carbohydrate,
-        }
-        nutritionalValue.push(obj);
+      let obj = {
+        "title": responseBody[i].food_name,
+        "image_url": responseBody[i].thumbnail,
+        "subtitle": 'Total Calories: ' + responseBody[i].total_calories + "\n" +
+          'protein: ' + responseBody[i].protein + "\n" +
+          'Carbohydrates: ' + responseBody[i].total_carbohydrate,
+      }
+      nutritionalValue.push(obj);
     }
     let messageData = {
-        "attachment": {
-            "type": "template",
-            "payload": {
-                "template_type": "generic",
-                "elements": nutritionalValue
-            }
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": nutritionalValue
         }
+      }
     }
     request({
-        url: 'https://graph.facebook.com/v2.6/me/messages',
-            qs: { access_token: process.env.VERIFY_TOKEN },
-            method: 'POST',
-            json: {
-                recipient: {id: recipientId},
-                message: messageData,
-            }
-    }, function(error, response, body){
-        if (error) {
-            console.log("Error sending message: " + response.error)
+      url: 'https://graph.facebook.com/v2.6/me/messages',
+      qs: { access_token: process.env.VERIFY_TOKEN },
+      method: 'POST',
+      json: {
+        recipient: { id: recipientId },
+        message: messageData,
+      }
+    }, function (error, response, body) {
+      if (error) {
+        console.log("Error sending message: " + response.error)
+      }
+    })
+  }
+
+  buttonTemplate(recipientId) {
+    let messageData = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "button",
+          "text": "What kind of property are you looking for?",
+          "buttons": [
+            {
+              "type": "postback",
+              "title": "Apartments",
+              "payload": "APARTMENTS"
+            },
+            {
+              "type": "postback",
+              "title": "Studio",
+              "payload": "STUDIO"
+            },
+            {
+              "type": "postback",
+              "title": "Single room",
+              "payload": "SINGLE_ROOM"
+            },
+            {
+              "type": "postback",
+              "title": "Store",
+              "payload": "STORE"
+            },
+          ]
         }
+      }
+    }
+    request({
+      url: 'https://graph.facebook.com/v2.6/me/messages',
+      qs: { access_token: process.env.VERIFY_TOKEN },
+      method: 'POST',
+      json: {
+        recipient: { id: recipientId },
+        message: messageData,
+      }
+    }, function (error, response, body) {
+      if (error) {
+        console.log("Error sending message: " + response.error)
+      }
     })
   }
 }
