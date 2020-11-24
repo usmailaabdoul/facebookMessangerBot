@@ -140,6 +140,7 @@ class WebhookHelpers {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       })
+      buttonTemplate = await buttonTemplate.json()
       console.log('buttonTemplate', buttonTemplate)
     } catch (e) {
       console.log("Error sending message: " + e)
