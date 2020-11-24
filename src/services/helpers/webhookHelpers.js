@@ -103,11 +103,11 @@ class WebhookHelpers {
               title: "Single room",
               payload: "SINGLE_ROOM"
             },
-            {
-              type: "postback",
-              title: "Store",
-              payload: "STORE"
-            },
+            // {
+            //   type: "postback",
+            //   title: "Store",
+            //   payload: "STORE"
+            // },
           ]
         }
       }
