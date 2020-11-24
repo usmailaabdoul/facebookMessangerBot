@@ -85,30 +85,46 @@ class WebhookHelpers {
       attachment: {
         type: "template",
         payload: {
-          template_type: "button",
-          text: "What kind of property are you looking for?",
-          buttons: [
-            {
-              type: "postback",
-              title: "Apartments",
-              payload: "APARTMENTS"
-            },
-            {
-              type: "postback",
-              title: "Studio",
-              payload: "STUDIO"
-            },
-            {
-              type: "postback",
-              title: "Single room",
-              payload: "SINGLE_ROOM"
-            },
-            // {
-            //   type: "postback",
-            //   title: "Store",
-            //   payload: "STORE"
-            // },
-          ]
+          template_type: "generic",
+          elements: [{
+            text: "What kind of property are you looking for?",
+            buttons: [
+              {
+                type: "postback",
+                title: "Apartments",
+                payload: "APARTMENTS"
+              },
+              {
+                type: "postback",
+                title: "Studio",
+                payload: "STUDIO"
+              },
+              {
+                type: "postback",
+                title: "Single room",
+                payload: "SINGLE_ROOM"
+              }
+            ]
+          }, {
+            title: "Swipe left/right for more options.",
+            buttons: [
+              {
+                type: "postback",
+                title: "Store",
+                payload: "STORE"
+              },
+              {
+                type: "postback",
+                title: "Duplex",
+                payload: "DUPLEX"
+              },
+              {
+                type: "postback",
+                title: "Quest house",
+                payload: "QUEST_HOUSE"
+              }
+            ]
+          }]
         }
       }
     }
