@@ -111,6 +111,7 @@ class WebhookHelpers {
         }
       }
     }
+    console.log({recipientId})
     request({
       url: 'https://graph.facebook.com/v2.6/me/messages',
       qs: { access_token: process.env.VERIFY_TOKEN },

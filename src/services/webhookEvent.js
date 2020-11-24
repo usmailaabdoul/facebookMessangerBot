@@ -28,7 +28,7 @@ class WebhookEvents {
           greeting = "Hello " + name + ". ";
         }
         let message = greeting + "Welcome to DRbot. Hope you are doing good today.";
-        let message2 = "I here to help find houses for rent without stress."
+        let message2 = "I am here to help you find houses for rent without stress."
         webHookHelper.isTyping(senderID);
         webHookHelper.sendMessage(senderID, { text: message }).then(() => {
           webHookHelper.sendMessage(senderID, { text: message2 }).then(() => {
