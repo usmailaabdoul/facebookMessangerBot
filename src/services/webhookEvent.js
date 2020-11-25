@@ -7,36 +7,14 @@ class WebhookEvents {
   postbackEvent(event) {
     const senderID = event.sender.id;
     const payload = event.postback.payload;
-
+    
     if (payload === 'WELCOME') {
-      request({
-        url: "https://graph.facebook.com/v2.6/" + senderID,
-        qs: {
-          access_token: process.env.VERIFY_TOKEN,
-          fields: "first_name"
-        },
-        method: "GET"
-      }, function (error, response, body) {
-        let greeting = '';
-        let name = ''
-        if (error) {
-          console.error("Error getting user name: " + error);
-        } else {
-          let bodyObject = JSON.parse(body);
-          console.log(bodyObject);
-          name = bodyObject.first_name;
-          greeting = "Hello " + name + ". ";
-        }
-        let message = greeting + "Welcome to DRbot. Hope you are doing good today.";
-        let message2 = "I am here to help you find houses for rent without stress."
-        webHookHelper.isTyping(senderID);
-        webHookHelper.sendMessage(senderID, { text: message }).then(() => {
-          webHookHelper.sendMessage(senderID, { text: message2 }).then(() => {
-            webHookHelper.buttonTemplate(senderID)
-          });
-        });
-      });
-    }
+        webHookHelper.welcomeUser(senderID);
+     }
+     else if (payload === 'APARTMENTS' || 'STUDIO' || 'SINGLE_ROOM' || 'STORE' || 'DUPLEX' || 'QUEST_HOUSE') {
+        localStorage.setItem('location', payload)
+        webHookHelper.chooseLocation(senderID);
+     } 
   }
 
   messageEvent(event) {
