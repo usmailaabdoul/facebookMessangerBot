@@ -191,7 +191,7 @@ class WebhookHelpers {
 
   async getLocations() {
     return new Promise(async (resolve, reject) => {
-      const fixCitiess = ['Buea', 'Douala', 'Limbe', 'Kumba', 'Kribi', 'Yaounde'];
+      const fixCities = ['Buea', 'Douala', 'Limbe', 'Kumba', 'Kribi', 'Yaounde'];
       let selectedCities = [];
 
       let url = 'https://api.digitalrenter.com/sandbox/v1/en/locations/cities'
