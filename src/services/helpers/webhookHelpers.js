@@ -140,9 +140,9 @@ class WebhookHelpers {
               title: "What kind of property are you looking for?",
               // "image_url":"<IMAGE_URL_TO_DISPLAY>",
               subtitle: "Swipe left/right for more options.",
-              default_action: {
-                type: "postback",
-              },
+              // default_action: {
+              //   type: "postback",
+              // },
               buttons: [
                 {
                   type: "postback",
