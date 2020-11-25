@@ -130,38 +130,42 @@ class WebhookHelpers {
       //   ]
       //   }
       // }
-      payload: {
-        template_type: "generic",
-        elements:[
-           {
-            title:"What kind of property are you looking for?",
-            // "image_url":"<IMAGE_URL_TO_DISPLAY>",
-            subtitle:"Swipe left/right for more options.",
-            default_action: {
-              type: "postback",
+
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [
+            {
+              title: "What kind of property are you looking for?",
+              // "image_url":"<IMAGE_URL_TO_DISPLAY>",
+              subtitle: "Swipe left/right for more options.",
+              default_action: {
+                type: "postback",
+              },
+              buttons: [
+                {
+                  type: "postback",
+                  title: "Apartments",
+                  payload: "APARTMENTS"
+                },
+                {
+                  type: "postback",
+                  title: "Studio",
+                  payload: "STUDIO"
+                },
+                {
+                  type: "postback",
+                  title: "Single room",
+                  payload: "SINGLE_ROOM"
+                }
+              ]
             },
-            buttons: [
-              {
-                type: "postback",
-                title: "Apartments",
-                payload: "APARTMENTS"
-              },
-              {
-                type: "postback",
-                title: "Studio",
-                payload: "STUDIO"
-              },
-              {
-                type: "postback",
-                title: "Single room",
-                payload: "SINGLE_ROOM"
-              }
-            ]     
-          },
-        ]
+          ]
+        }
       }
     }
-    
+
     console.log({ recipientId })
     // request({
     //   url: 'https://graph.facebook.com/v2.6/me/messages',
