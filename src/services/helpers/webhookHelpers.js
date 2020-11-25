@@ -82,13 +82,64 @@ class WebhookHelpers {
 
   async buttonTemplate(recipientId) {
     let messageData = {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "generic",
-          text: "What kind of property are you looking for?",
-          elements: [{
-            title: "Swipe left/right for more options.",
+      // attachment: {
+      //   type: "template",
+      //   payload: {
+      //     template_type: "generic",
+      //     // text: "What kind of property are you looking for?",
+      //     elements: [{
+      //       title: "",
+      //       subtitle:"",
+      //       buttons: [
+      //         {
+      //           type: "postback",
+      //           title: "Apartments",
+      //           payload: "APARTMENTS"
+      //         },
+      //         {
+      //           type: "postback",
+      //           title: "Studio",
+      //           payload: "STUDIO"
+      //         },
+      //         {
+      //           type: "postback",
+      //           title: "Single room",
+      //           payload: "SINGLE_ROOM"
+      //         }
+      //       ]
+      //     }
+      // , {
+      //   buttons: [
+      //     {
+      //       type: "postback",
+      //       title: "Store",
+      //       payload: "STORE"
+      //     },
+      //     {
+      //       type: "postback",
+      //       title: "Duplex",
+      //       payload: "DUPLEX"
+      //     },
+      //     {
+      //       type: "postback",
+      //       title: "Quest house",
+      //       payload: "QUEST_HOUSE"
+      //     }
+      //   ]
+      // }
+      //   ]
+      //   }
+      // }
+      payload: {
+        template_type: "generic",
+        elements:[
+           {
+            title:"What kind of property are you looking for?",
+            // "image_url":"<IMAGE_URL_TO_DISPLAY>",
+            subtitle:"Swipe left/right for more options.",
+            default_action: {
+              type: "postback",
+            },
             buttons: [
               {
                 type: "postback",
@@ -105,29 +156,12 @@ class WebhookHelpers {
                 title: "Single room",
                 payload: "SINGLE_ROOM"
               }
-            ]
-          }, {
-            buttons: [
-              {
-                type: "postback",
-                title: "Store",
-                payload: "STORE"
-              },
-              {
-                type: "postback",
-                title: "Duplex",
-                payload: "DUPLEX"
-              },
-              {
-                type: "postback",
-                title: "Quest house",
-                payload: "QUEST_HOUSE"
-              }
-            ]
-          }]
-        }
+            ]     
+          },
+        ]
       }
     }
+    
     console.log({ recipientId })
     // request({
     //   url: 'https://graph.facebook.com/v2.6/me/messages',
