@@ -82,63 +82,14 @@ class WebhookHelpers {
 
   async buttonTemplate(recipientId) {
     let messageData = {
-      // attachment: {
-      //   type: "template",
-      //   payload: {
-      //     template_type: "generic",
-      //     // text: "What kind of property are you looking for?",
-      //     elements: [{
-      //       title: "",
-      //       subtitle:"",
-      //       buttons: [
-      //         {
-      //           type: "postback",
-      //           title: "Apartments",
-      //           payload: "APARTMENTS"
-      //         },
-      //         {
-      //           type: "postback",
-      //           title: "Studio",
-      //           payload: "STUDIO"
-      //         },
-      //         {
-      //           type: "postback",
-      //           title: "Single room",
-      //           payload: "SINGLE_ROOM"
-      //         }
-      //       ]
-      //     }
-      // , {
-      //   buttons: [
-      //     {
-      //       type: "postback",
-      //       title: "Store",
-      //       payload: "STORE"
-      //     },
-      //     {
-      //       type: "postback",
-      //       title: "Duplex",
-      //       payload: "DUPLEX"
-      //     },
-      //     {
-      //       type: "postback",
-      //       title: "Quest house",
-      //       payload: "QUEST_HOUSE"
-      //     }
-      //   ]
-      // }
-      //   ]
-      //   }
-      // }
-
       attachment: {
         type: "template",
         payload: {
           template_type: "generic",
-          text: "What kind of property are you looking for?",
           elements: [
             {
-              title: "Swipe left/right for more options.",
+              title: "What kind of property are you looking for?",
+              subtitle: "Swipe left/right for more options.",
               buttons: [
                 {
                   type: "postback",
