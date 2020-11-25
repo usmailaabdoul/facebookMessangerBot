@@ -161,6 +161,31 @@ class WebhookHelpers {
                 }
               ]
             },
+            {
+              title: "What kind of property are you looking for?",
+              // "image_url":"<IMAGE_URL_TO_DISPLAY>",
+              subtitle: "Swipe left/right for more options.",
+              // default_action: {
+              //   type: "postback",
+              // },
+              buttons: [
+                {
+                  type: "postback",
+                  title: "Store",
+                  payload: "STORE"
+                },
+                {
+                  type: "postback",
+                  title: "Duplex",
+                  payload: "DUPLEX"
+                },
+                {
+                  type: "postback",
+                  title: "Quest house",
+                  payload: "QUEST_HOUSE"
+                }
+              ]
+            },
           ]
         }
       }
