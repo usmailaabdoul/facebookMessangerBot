@@ -11,11 +11,13 @@ class WebhookEvents {
     if (payload === 'WELCOME') {
         webHookHelper.welcomeUser(senderID);
      }
-     else if (payload === 'APARTMENTS' || 'STUDIO' || 'SINGLE_ROOM' || 'STORE' || 'DUPLEX' || 'QUEST_HOUSE') {
+     else if (payload === 'APARTMENTS' || payload === 'STUDIO' || payload ===  'SINGLE_ROOM' || payload === 'STORE' || payload === 'DUPLEX' || payload === 'QUEST_HOUSE') {
         // localStorage.setItem('location', payload)
         global.location = payload;
         webHookHelper.chooseLocation(senderID);
-     } 
+     } else if (payload === 'BUEA' || payload ===  'DOUALA' || payload ===  'LIMBE' || payload ===  'KUMBA' || payload ===  'KRIBI' || payload === 'YAOUNDE') {
+       console.log(payload)
+     }
   }
 
   messageEvent(event) {

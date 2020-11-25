@@ -231,7 +231,7 @@ class WebhookHelpers {
     
       const elements = newElements.map((element) => {
         return {
-          title: "What kind of property are you looking for?",
+          title: "Which location?",
           buttons: element.map((button) => {
             return {
               type: "postback",
