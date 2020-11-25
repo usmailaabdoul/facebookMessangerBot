@@ -160,33 +160,29 @@ class WebhookHelpers {
   }
 
   async welcomeUser(recipientId) {
-    request({
-      url: "https://graph.facebook.com/v2.6/" + recipientId,
-      qs: {
-        access_token: process.env.VERIFY_TOKEN,
-        fields: "first_name"
-      },
-      method: "GET"
-    }, function (error, response, body) {
-      let greeting = '';
-      let name = ''
-      if (error) {
-        console.error("Error getting user name: " + error);
-      } else {
-        let bodyObject = JSON.parse(body);
-        console.log(bodyObject);
-        name = bodyObject.first_name;
-        greeting = "Hello " + name + ". ";
-      }
-      let message = greeting + "Welcome to DRbot. Hope you are doing good today.";
-      let message2 = "I am here to help you find houses for rent without stress."
+    const url = `https://graph.facebook.com/v2.6/${recipientId}?fields=first_name,last_name&access_token=${process.env.VERIFY_TOKEN}`
+
+    console.log(url)
+    try {
+      let user = await fetch(url, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      user = await user.json()
+
+      let greeting = `Hello ${user.first_name}.`;
+      let message = `${greeting} Welcome to DRbot. Hope you are doing good today.`;
+      let message2 = 'I am here to help you find houses for rent without stress.';
+
       this.isTyping(recipientId);
       this.sendMessage(recipientId, { text: message }).then(() => {
         this.sendMessage(recipientId, { text: message2 }).then(() => {
           this.buttonTemplate(recipientId)
         });
       });
-    });
+    } catch (e) {
+      console.log("Error sending message: " + e)
+    }
   }
 
   async getLocations() {
@@ -278,6 +274,7 @@ class WebhookHelpers {
     }
 
   }
+
 }
 
 const webhookHelpers = new WebhookHelpers();
