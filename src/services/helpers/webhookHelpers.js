@@ -180,10 +180,10 @@ class WebhookHelpers {
       }
       let message = greeting + "Welcome to DRbot. Hope you are doing good today.";
       let message2 = "I am here to help you find houses for rent without stress."
-      webHookHelper.isTyping(recipientId);
-      webHookHelper.sendMessage(recipientId, { text: message }).then(() => {
-        webHookHelper.sendMessage(recipientId, { text: message2 }).then(() => {
-          webHookHelper.buttonTemplate(recipientId)
+      this.isTyping(recipientId);
+      this.sendMessage(recipientId, { text: message }).then(() => {
+        this.sendMessage(recipientId, { text: message2 }).then(() => {
+          this.buttonTemplate(recipientId)
         });
       });
     });
