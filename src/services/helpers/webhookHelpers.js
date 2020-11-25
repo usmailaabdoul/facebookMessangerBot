@@ -86,8 +86,9 @@ class WebhookHelpers {
         type: "template",
         payload: {
           template_type: "generic",
+          text: "What kind of property are you looking for?",
           elements: [{
-            text: "What kind of property are you looking for?",
+            title: "Swipe left/right for more options.",
             buttons: [
               {
                 type: "postback",
@@ -106,7 +107,6 @@ class WebhookHelpers {
               }
             ]
           }, {
-            title: "Swipe left/right for more options.",
             buttons: [
               {
                 type: "postback",
