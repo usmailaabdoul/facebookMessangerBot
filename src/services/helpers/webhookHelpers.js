@@ -189,6 +189,7 @@ class WebhookHelpers {
 
       let url = 'https://api.digitalrenter.com/sandbox/v1/en/locations/cities'
       console.log(url)
+
       try {
         let cities = await fetch(url, {
           method: 'GET',
@@ -208,7 +209,7 @@ class WebhookHelpers {
         console.log(selectedCities)
         resolve(selectedCities)
       } catch (e) {
-        console.log("Error sending message: " + e)
+        console.log("Error getting cities: " + e)
         reject(e)
       }
     })
