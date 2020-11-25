@@ -12,7 +12,8 @@ class WebhookEvents {
         webHookHelper.welcomeUser(senderID);
      }
      else if (payload === 'APARTMENTS' || 'STUDIO' || 'SINGLE_ROOM' || 'STORE' || 'DUPLEX' || 'QUEST_HOUSE') {
-        localStorage.setItem('location', payload)
+        // localStorage.setItem('location', payload)
+        global.location = payload;
         webHookHelper.chooseLocation(senderID);
      } 
   }

@@ -109,8 +109,7 @@ class WebhookHelpers {
               ]
             },
             {
-              title: "Not found what you are looking for? chechout website",
-              subtitle: 'View more on website',
+              title: "Haven't found what you are looking for? chechout our website",
               default_action: {
                 type: "web_url",
                 url: "https://digitalrenter.com/",
@@ -220,6 +219,9 @@ class WebhookHelpers {
   async chooseLocation(recipientId) {
     this.isTyping(recipientId);
     let cities = await this.getLocations();
+
+    let location = global.location;
+    console.log({location});
 
     const formatButtons = (citiesArray) => {
       let i, j, newElements = [], chunk = 3;

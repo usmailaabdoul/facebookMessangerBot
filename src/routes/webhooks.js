@@ -18,25 +18,6 @@ router.post('/ping', async (req, res, next) => {
 });
 
 router.post('/webhook', async (req, res, next) => {
-  // if (req.body.object === 'page') {
-
-  //   req.body.entry.forEach(function (entry) {
-
-
-  //     entry.messaging.forEach(function (event) {
-  //       console.log(event);
-  //       if (event.postback) {
-  //         webhookServices.postbackEvent(event);
-  //       } else if (event.message) {
-  //         webhookServices.messageEvent(event);
-  //       }
-  //     });
-  //   });
-  //   res.sendStatus(200);
-  // } else {
-  //   res.sendStatus(404).json('Something unexpected happened');
-  // }
-
   let body = req.body;
 
   if (body.object === 'page') {
