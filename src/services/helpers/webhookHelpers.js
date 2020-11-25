@@ -135,14 +135,10 @@ class WebhookHelpers {
         type: "template",
         payload: {
           template_type: "generic",
+          text: "What kind of property are you looking for?",
           elements: [
             {
-              title: "What kind of property are you looking for?",
-              // "image_url":"<IMAGE_URL_TO_DISPLAY>",
-              subtitle: "Swipe left/right for more options.",
-              // default_action: {
-              //   type: "postback",
-              // },
+              title: "Swipe left/right for more options.",
               buttons: [
                 {
                   type: "postback",
@@ -163,11 +159,11 @@ class WebhookHelpers {
             },
             {
               title: "What kind of property are you looking for?",
-              // "image_url":"<IMAGE_URL_TO_DISPLAY>",
-              subtitle: "Swipe left/right for more options.",
-              // default_action: {
-              //   type: "postback",
-              // },
+              default_action: {
+                type: "web_url",
+                url: "https://digitalrenter.com/",
+                webview_height_ratio: "FULL",
+              },
               buttons: [
                 {
                   type: "postback",
