@@ -196,6 +196,7 @@ class WebhookHelpers {
         })
         cities = await cities.json()
 
+        console.log(cities.slice(0, 10))
         fixCities.map((c) => {
           let index = cities.findIndex((city) => city.name.toLowerCase() === c.toLowerCase());
 
