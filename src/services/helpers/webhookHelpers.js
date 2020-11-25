@@ -199,7 +199,7 @@ class WebhookHelpers {
 
         console.log(cities)
         fixCities.map((c) => {
-          let index = cities.findIndex((city) => city.name.toLowerCase() === c.toLowerCase());
+          let index = cities.data.findIndex((city) => city.name.toLowerCase() === c.toLowerCase());
 
           if (index > -1) {
             selectedCities.push(cities[index])
