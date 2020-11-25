@@ -144,7 +144,6 @@ class WebhookHelpers {
     }
     const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
 
-    console.log(url)
     try {
       let buttonTemplate = await fetch(url, {
         method: 'POST',
@@ -161,7 +160,6 @@ class WebhookHelpers {
   async welcomeUser(recipientId) {
     const url = `https://graph.facebook.com/v2.6/${recipientId}?fields=first_name,last_name&access_token=${process.env.VERIFY_TOKEN}`
 
-    console.log(url)
     try {
       let user = await fetch(url, {
         method: 'GET',
@@ -194,8 +192,7 @@ class WebhookHelpers {
       try {
         let cities = await fetch(url, {
           method: 'GET',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(body)
+          headers: { 'Content-Type': 'application/json' }
         })
         cities = await cities.json()
 
