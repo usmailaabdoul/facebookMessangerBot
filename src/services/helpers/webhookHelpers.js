@@ -190,7 +190,7 @@ class WebhookHelpers {
   }
 
   async getLocations() {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       const fixCitiess = ['Buea', 'Douala', 'Limbe', 'Kumba', 'Kribi', 'Yaounde'];
       let selectedCities = [];
 
