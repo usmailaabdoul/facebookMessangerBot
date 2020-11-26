@@ -44,7 +44,6 @@ class WebhookHelpers {
   }
 
   sendGenericMessage(recipientId, responseBody) {
-    console.log(responseBody);
     const nutritionalValue = [];
     for (let i = 0; i < responseBody.length; i++) { // I dont like using forEach
       let obj = {
@@ -186,7 +185,6 @@ class WebhookHelpers {
       let selectedCities = [];
 
       let url = 'https://api.digitalrenter.com/sandbox/v1/en/locations/cities'
-      console.log(url)
 
       try {
         let cities = await fetch(url, {
@@ -195,7 +193,6 @@ class WebhookHelpers {
         })
         cities = await cities.json()
 
-        console.log(cities.data)
         fixCities.map((c) => {
           let index = cities.data.findIndex((city) => city.name.toLowerCase() === c.toLowerCase());
 
@@ -204,7 +201,6 @@ class WebhookHelpers {
           }
         })
 
-        console.log(selectedCities)
         resolve(selectedCities)
       } catch (e) {
         console.log("Error getting cities: " + e)
@@ -256,7 +252,6 @@ class WebhookHelpers {
     }
     const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
 
-    console.log(url)
     try {
       await fetch(url, {
         method: 'POST',
@@ -273,7 +268,6 @@ class WebhookHelpers {
     this.isTyping(recipientId);
     return new Promise(async (resolve, reject) => {
       let url = `https://api.digitalrenter.com/sandbox/v1/en/listings?page=1&location=${location}&property_type=${property_type}&listing_type=client_has`;
-      console.log(url)
 
       try {
         let listings = await fetch(url, {
@@ -283,7 +277,6 @@ class WebhookHelpers {
         listings = await listings.json()
 
         let data = listings.data.splice(0, 9);
-        // console.log(data)
         resolve(data)
       } catch (e) {
         console.log("Error getting cities: " + e)
@@ -300,8 +293,6 @@ class WebhookHelpers {
     const listingsElement = [];
 
     listings.map((listing) => {
-      console.log(listing.images);
-
       let element = {
         title: listing.headline,
         image_url: listing.images.length > 0 ? listing.images[0].path : '',
@@ -335,7 +326,6 @@ class WebhookHelpers {
     }
     const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
 
-    console.log(url)
     try {
       await fetch(url, {
         method: 'POST',
