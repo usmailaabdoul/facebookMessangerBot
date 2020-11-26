@@ -283,7 +283,7 @@ class WebhookHelpers {
         listings = await listings.json()
 
         let data = listings.data.splice(0, 9);
-        console.log(data)
+        // console.log(data)
         resolve(data)
       } catch (e) {
         console.log("Error getting cities: " + e)
@@ -300,9 +300,11 @@ class WebhookHelpers {
     const listingsElement = [];
 
     listings.map((listing) => {
+      console.log(isting.images);
+
       let element = {
         title: listing.headline,
-        image_url: listing.images[0].path,
+        // image_url: listing.images[0].path,
         subtitle: `${listing.description.substr(0, 20)} \n Price: ${listing.price} \n Owner: ${listing.manager_or_estate_name}`
       }
 
