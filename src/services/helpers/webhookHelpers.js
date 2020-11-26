@@ -274,8 +274,9 @@ class WebhookHelpers {
 
   }
 
-  async getListings(recipientId, property_type) {
+  async getListings(recipientId) {
     let location = `city-${this.selectedLocation.name}-${this.selectedLocation.id}`
+    let property_type = this.property_type;
 
     this.isTyping(recipientId);
     return new Promise(async (resolve, reject) => {
@@ -305,7 +306,7 @@ class WebhookHelpers {
       this.selectedLocation = this.listOfCities[index]
     };
 
-    let listings = await this.getListings(recipientId, this.propertyType);
+    let listings = await this.getListings(recipientId);
 
     const listingsElement = [];
 
