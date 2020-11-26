@@ -171,15 +171,12 @@ class WebhookHelpers {
       })
       user = await user.json()
 
-      let greeting = `Hello ${user.first_name}.`;
-      let message = `${greeting} Welcome to DRbot. Hope you are doing good today.`;
-      let message2 = 'I am here to help you find houses for rent without stress.';
+      let greeting = `Hi ${user.first_name}.`;
+      let message = `${greeting} \n\n I'm Square, your virtual assistant from Digital renter.`;
 
       this.isTyping(recipientId);
       this.sendMessage(recipientId, { text: message }).then(() => {
-        this.sendMessage(recipientId, { text: message2 }).then(() => {
-          this.propertyType(recipientId)
-        });
+        this.propertyType(recipientId);
       });
     } catch (e) {
       console.log("Error sending message: " + e)
@@ -299,7 +296,7 @@ class WebhookHelpers {
   }
 
   async showListings(recipientId, location) {
-    
+
     let index = this.listOfCities.findIndex((city) => city.name.toLowerCase() === location.toLowerCase())
 
     if (index > -1) {
@@ -324,7 +321,7 @@ class WebhookHelpers {
             type: "web_url",
             url: `https://digitalrenter.com/en/ad/${listing.id}`,
             webview_height_ratio: "FULL",
-            title: "more details"
+            title: "More Details"
           },
         ]
       }
