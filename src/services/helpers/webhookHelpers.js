@@ -304,7 +304,7 @@ class WebhookHelpers {
 
       let element = {
         title: listing.headline,
-        image_url: listing.images[0].path ? listing.images[0].path : '',
+        image_url: listing.images[0].hasOwnProperty('path') ? listing.images[0].path : '',
         subtitle: `${listing.description.substr(0, 20)} \n Price: ${listing.price} \n Owner: ${listing.manager_or_estate_name}`
       }
 
