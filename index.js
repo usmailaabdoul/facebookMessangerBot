@@ -6,7 +6,7 @@ async function init() {
   return createServer();
 }
 
-global.location = '';
+global.property_type = '';
 
 init().then(server => {
   server.listen(process.env.PORT, () => {

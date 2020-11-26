@@ -219,9 +219,6 @@ class WebhookHelpers {
     this.isTyping(recipientId);
     let cities = await this.getLocations();
 
-    let location = global.location;
-    console.log({location});
-
     const formatButtons = (citiesArray) => {
       let i, j, newElements = [], chunk = 3;
       for (i = 0, j = citiesArray.length; i < j; i += chunk) {
@@ -231,7 +228,7 @@ class WebhookHelpers {
     
       const elements = newElements.map((element) => {
         return {
-          title: "Which location?",
+          title: "In which location?",
           buttons: element.map((button) => {
             return {
               type: "postback",
@@ -276,6 +273,74 @@ class WebhookHelpers {
 
   }
 
+  getListings(location, property_type) {
+    return new Promise(async (resolve, reject) => {
+      let url = `https://api.digitalrenter.com/sandbox/v1/en/listings?page=1&location=${location}&property_type=${property_type}&listing_type=client_has`;
+      console.log(url)
+
+      try {
+        let listings = await fetch(url, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' }
+        })
+        listings = await listings.json()
+
+        console.log(listings.data.length)
+        resolve(listings.data.splice(0, 9))
+      } catch (e) {
+        console.log("Error getting cities: " + e)
+        reject(e)
+      }
+    })
+  }
+
+  async showListings(recipientId, location) {
+    let property_type = global.property_type;
+
+    let listings = this.getListings(location, property_type);
+
+    const listingsElement = [];
+
+    listings.map((listing) => {
+      let element = {
+        title: listing.headline,
+        image_url: listing.images[0].path,
+        subtitle: `${listing.description.substr(0, 20)} \n Price: ${listing.price} \n Owner: ${listing.manager_or_estate_name}`
+      }
+
+      listingsElement.push(element)
+    })
+
+    let messageData = {
+      "attachment": {
+        "type": "template",
+        "payload": {
+          "template_type": "generic",
+          "elements": listingsElement
+        }
+      }
+    }
+
+    const body = {
+      recipient: { id: recipientId },
+      message: messageData,
+    }
+    const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
+
+    console.log(url)
+    try {
+      let buttonTemplate = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+      buttonTemplate = await buttonTemplate.json()
+      console.log('buttonTemplate', buttonTemplate)
+    } catch (e) {
+      console.log("Error sending message: " + e)
+    }
+  }
+  
 }
 
 const webhookHelpers = new WebhookHelpers();

@@ -12,11 +12,12 @@ class WebhookEvents {
         webHookHelper.welcomeUser(senderID);
      }
      else if (payload === 'APARTMENTS' || payload === 'STUDIO' || payload ===  'SINGLE_ROOM' || payload === 'STORE' || payload === 'DUPLEX' || payload === 'QUEST_HOUSE') {
-        // localStorage.setItem('location', payload)
-        global.location = payload;
+        global.property_type = payload;
         webHookHelper.chooseLocation(senderID);
      } else if (payload === 'BUEA' || payload ===  'DOUALA' || payload ===  'LIMBE' || payload ===  'KUMBA' || payload ===  'KRIBI' || payload === 'YAOUNDE') {
-       console.log(payload)
+       webHookHelper.showListings(senderID, payload)
+     } else {
+       console.log(payload);
      }
   }
 
