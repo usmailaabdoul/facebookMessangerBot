@@ -311,11 +311,14 @@ class WebhookHelpers {
     const listingsElement = [];
 
     listings.map((listing) => {
-  
+      let quarter = listing.quarter.name ?? '';
+      let image_url = listing.images.length > 0 ? listing.images[0].path : 'https://digitalrenter.com/front/img/house-search.png';
+      let owner = listing.manager_or_estate_name ?? '';
+
       let element = {
         title: listing.headline,
-        image_url: listing.images.length > 0 ? listing.images[0].path : 'https://digitalrenter.com/front/img/house-search.png',
-        subtitle: `Price: ${listing.price} \n Quarter: ${listing.quarter.name ?? ''} \n Owner: ${listing.manager_or_estate_name}`,
+        image_url: image_url,
+        subtitle: `Price: ${listing.price} \n Quarter: ${quarter} \n Owner: ${owner}`,
         buttons: [
           {
             type: "web_url",
