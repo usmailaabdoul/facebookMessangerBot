@@ -3,6 +3,10 @@ const fetch = require('node-fetch');
 const request = require('request');
 
 class WebhookHelpers {
+  constructor() {
+    this.property_type = '';
+    this.selectedLocation = {};
+  };
 
   isTyping(recipientId) {
     request({
@@ -145,11 +149,13 @@ class WebhookHelpers {
     const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
 
     try {
-      await fetch(url, {
+      let propertyType = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       })
+
+      console.log(propertyType)
     } catch (e) {
       console.log("Error sending message: " + e)
     }
