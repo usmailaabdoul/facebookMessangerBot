@@ -51,8 +51,8 @@ class WebhookEvents {
         request(options, function (error, response, body) {
           if (error) throw new Error(error);
           webHookHelper.isTyping(senderID);
-          // after the response is recieved we will send the details in a Generic template
-          webHookHelper.sendGenericMessage(senderID, body);
+          // webHookHelper.sendGenericMessage(senderID, body);
+          webHookHelper.welcomeUser(senderID);
         });
 
       }
