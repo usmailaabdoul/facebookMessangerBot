@@ -300,7 +300,7 @@ class WebhookHelpers {
 
   async showListings(recipientId, location) {
     
-    this.listOfCities.findIndex((city) => city.name.toLowerCase() === location.toLowerCase())
+    let index = this.listOfCities.findIndex((city) => city.name.toLowerCase() === location.toLowerCase())
 
     if (index > -1) {
       this.selectedLocation = this.listOfCities[index]
