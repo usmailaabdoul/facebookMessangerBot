@@ -80,7 +80,7 @@ class WebhookHelpers {
     })
   }
 
-  async buttonTemplate(recipientId) {
+  async propertyType(recipientId) {
     let messageData = {
       attachment: {
         type: "template",
@@ -93,8 +93,8 @@ class WebhookHelpers {
               buttons: [
                 {
                   type: "postback",
-                  title: "Apartments",
-                  payload: "APARTMENTS"
+                  title: "Apartment",
+                  payload: "APARTMENT"
                 },
                 {
                   type: "postback",
@@ -145,13 +145,11 @@ class WebhookHelpers {
     const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
 
     try {
-      let buttonTemplate = await fetch(url, {
+      await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       })
-      buttonTemplate = await buttonTemplate.json()
-      console.log('buttonTemplate', buttonTemplate)
     } catch (e) {
       console.log("Error sending message: " + e)
     }
@@ -174,7 +172,7 @@ class WebhookHelpers {
       this.isTyping(recipientId);
       this.sendMessage(recipientId, { text: message }).then(() => {
         this.sendMessage(recipientId, { text: message2 }).then(() => {
-          this.buttonTemplate(recipientId)
+          this.propertyType(recipientId)
         });
       });
     } catch (e) {
@@ -225,7 +223,7 @@ class WebhookHelpers {
         let temp = citiesArray.slice(i, i + chunk);
         newElements.push(temp)
       }
-    
+
       const elements = newElements.map((element) => {
         return {
           title: "In which location?",
@@ -238,7 +236,7 @@ class WebhookHelpers {
           })
         }
       })
-    
+
       return elements
     }
 
@@ -260,20 +258,19 @@ class WebhookHelpers {
 
     console.log(url)
     try {
-      let buttonTemplate = await fetch(url, {
+      await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       })
-      buttonTemplate = await buttonTemplate.json()
-      console.log('buttonTemplate', buttonTemplate)
     } catch (e) {
       console.log("Error sending message: " + e)
     }
 
   }
 
-  getListings(location, property_type) {
+  async getListings(location, property_type) {
+    this.isTyping(recipientId);
     return new Promise(async (resolve, reject) => {
       let url = `https://api.digitalrenter.com/sandbox/v1/en/listings?page=1&location=${location}&property_type=${property_type}&listing_type=client_has`;
       console.log(url)
@@ -297,7 +294,7 @@ class WebhookHelpers {
   async showListings(recipientId, location) {
     let property_type = global.property_type;
 
-    let listings = this.getListings(location, property_type);
+    let listings = await this.getListings(location, property_type);
 
     const listingsElement = [];
 
@@ -329,18 +326,16 @@ class WebhookHelpers {
 
     console.log(url)
     try {
-      let buttonTemplate = await fetch(url, {
+      await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       })
-      buttonTemplate = await buttonTemplate.json()
-      console.log('buttonTemplate', buttonTemplate)
     } catch (e) {
       console.log("Error sending message: " + e)
     }
   }
-  
+
 }
 
 const webhookHelpers = new WebhookHelpers();
