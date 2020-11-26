@@ -311,9 +311,9 @@ class WebhookHelpers {
     const listingsElement = [];
 
     listings.map((listing) => {
-      let quarter = listing.quarter.hasOwnProperty('name') ? listing.quarter.name : '';
+      let quarter = listing.quarter !== null ? listing.quarter.name : '';
       let image_url = listing.images.length > 0 ? listing.images[0].path : 'https://digitalrenter.com/front/img/house-search.png';
-      let owner = listing.manager_or_estate_name.length > 0 ? listing.manager_or_estate_name : '';
+      let owner = listing.manager_or_estate_name !== null ? listing.manager_or_estate_name : '';
 
       let element = {
         title: listing.headline,
