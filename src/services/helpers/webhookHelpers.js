@@ -269,7 +269,7 @@ class WebhookHelpers {
 
   }
 
-  async getListings(location, property_type) {
+  async getListings(recipientId, location, property_type) {
     this.isTyping(recipientId);
     return new Promise(async (resolve, reject) => {
       let url = `https://api.digitalrenter.com/sandbox/v1/en/listings?page=1&location=${location}&property_type=${property_type}&listing_type=client_has`;
@@ -294,7 +294,7 @@ class WebhookHelpers {
   async showListings(recipientId, location) {
     let property_type = global.property_type;
 
-    let listings = await this.getListings(location, property_type);
+    let listings = await this.getListings(recipientId, location, property_type);
 
     const listingsElement = [];
 
