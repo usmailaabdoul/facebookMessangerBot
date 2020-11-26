@@ -311,7 +311,7 @@ class WebhookHelpers {
             type: "web_url",
             url: "https://digitalrenter.com/",
             webview_height_ratio: "FULL",
-            title: "Click to view more details"
+            title: "more details"
           },
         ]
       }
