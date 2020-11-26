@@ -282,8 +282,9 @@ class WebhookHelpers {
         })
         listings = await listings.json()
 
-        console.log(listings.data.length)
-        resolve(listings.data.splice(0, 9))
+        let data = listings.data.splice(0, 9);
+        console.log(data)
+        resolve(data)
       } catch (e) {
         console.log("Error getting cities: " + e)
         reject(e)
