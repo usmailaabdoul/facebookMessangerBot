@@ -300,7 +300,7 @@ class WebhookHelpers {
     const listingsElement = [];
 
     listings.map((listing) => {
-      console.log(isting.images);
+      console.log(listing.images);
 
       let element = {
         title: listing.headline,
