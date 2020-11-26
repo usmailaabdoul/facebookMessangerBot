@@ -64,6 +64,7 @@ class WebhookHelpers {
         }
       }
     }
+
     request({
       url: 'https://graph.facebook.com/v2.6/me/messages',
       qs: { access_token: process.env.VERIFY_TOKEN },
@@ -296,7 +297,7 @@ class WebhookHelpers {
       let element = {
         title: listing.headline,
         image_url: listing.images.length > 0 ? listing.images[0].path : '',
-        subtitle: `Price: ${listing.price} \n Quarter: ${listing.quarter} \n Owner: ${listing.manager_or_estate_name}`,
+        subtitle: `Price: ${listing.price} \n Quarter: ${listing.quarter.name} \n Owner: ${listing.manager_or_estate_name}`,
         buttons: [
           {
             type: "web_url",
