@@ -282,7 +282,7 @@ class WebhookHelpers {
         })
         listings = await listings.json()
 
-        let data = listings.data.splice(0, 9);
+        let data = listings.data.splice(0, 2);
         // console.log(data)
         resolve(data)
       } catch (e) {
@@ -304,8 +304,8 @@ class WebhookHelpers {
 
       let element = {
         title: listing.headline,
-        image_url: listing.images.path ? listing.images[0].path : '',
-        subtitle: `${listing.description.substr(0, 50)} \n Price: ${listing.price} \n Owner: ${listing.manager_or_estate_name}`
+        image_url: listing.images[0].path,
+        subtitle: `${listing.description.substr(0, 20)} \n Price: ${listing.price} \n Owner: ${listing.manager_or_estate_name}`
       }
 
       listingsElement.push(element)
