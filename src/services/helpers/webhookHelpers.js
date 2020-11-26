@@ -305,7 +305,15 @@ class WebhookHelpers {
       let element = {
         title: listing.headline,
         image_url: listing.images.length > 0 ? listing.images[0].path : '',
-        subtitle: `${listing.description.substr(0, 10)} \n Price: ${listing.price} \n Owner: ${listing.manager_or_estate_name}`
+        subtitle: `Price: ${listing.price} \n Quarter: ${listing.quarter} \n Owner: ${listing.manager_or_estate_name}`,
+        buttons: [
+          {
+            type: "web_url",
+            url: "https://digitalrenter.com/",
+            webview_height_ratio: "FULL",
+            title: "Click to view more details"
+          },
+        ]
       }
 
       listingsElement.push(element)
