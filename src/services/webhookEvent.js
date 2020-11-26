@@ -12,8 +12,8 @@ class WebhookEvents {
         webHookHelper.welcomeUser(senderID);
      }
      else if (payload === 'APARTMENT' || payload === 'STUDIO' || payload ===  'SINGLE_ROOM' || payload === 'STORE' || payload === 'DUPLEX' || payload === 'QUEST_HOUSE') {
-        global.property_type = payload;
-        webHookHelper.chooseLocation(senderID);
+        // global.property_type = payload;
+        webHookHelper.chooseLocation(senderID, payload);
      } else if (payload === 'BUEA' || payload ===  'DOUALA' || payload ===  'LIMBE' || payload ===  'KUMBA' || payload ===  'KRIBI' || payload === 'YAOUNDE') {
        webHookHelper.showListings(senderID, payload)
      } else {

@@ -6,6 +6,7 @@ class WebhookHelpers {
   constructor() {
     this.property_type = '';
     this.selectedLocation = {};
+    this.listOfCities = [];
   };
 
   isTyping(recipientId) {
@@ -149,13 +150,12 @@ class WebhookHelpers {
     const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
 
     try {
-      let propertyType = await fetch(url, {
+      await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       })
 
-      console.log(propertyType)
     } catch (e) {
       console.log("Error sending message: " + e)
     }
@@ -216,9 +216,12 @@ class WebhookHelpers {
     })
   }
 
-  async chooseLocation(recipientId) {
+  async chooseLocation(recipientId, property_type) {
+    this.propertyType = property_type;
+
     this.isTyping(recipientId);
     let cities = await this.getLocations();
+    this.listOfCities = cities
 
     const formatButtons = (citiesArray) => {
       let i, j, newElements = [], chunk = 3;
@@ -271,7 +274,10 @@ class WebhookHelpers {
 
   }
 
-  async getListings(recipientId, location, property_type) {
+  async getListings(recipientId, property_type) {
+    let location = `city-${this.selectedLocation.name}-${this.selectedLocation.id}`
+    console.log({location});
+    
     this.isTyping(recipientId);
     return new Promise(async (resolve, reject) => {
       let url = `https://api.digitalrenter.com/sandbox/v1/en/listings?page=1&location=${location}&property_type=${property_type}&listing_type=client_has`;
@@ -293,9 +299,14 @@ class WebhookHelpers {
   }
 
   async showListings(recipientId, location) {
-    let property_type = global.property_type;
+    
+    this.listOfCities.findIndex((city) => city.name.toLowerCase() === location.toLowerCase())
 
-    let listings = await this.getListings(recipientId, location, property_type);
+    if (index > -1) {
+      this.selectedLocation = this.listOfCities[index]
+    };
+
+    let listings = await this.getListings(recipientId, location, this.propertyType);
 
     const listingsElement = [];
 
