@@ -251,12 +251,12 @@ class WebhookHelpers {
         type: "template",
         payload: {
           template_type: "button",
-          text: "Click to view all properties",
+          text: "Haven't found what you need? \n View more properties on Digital Renter",
           buttons: [
             {
               type: "web_url",
               url: listingsUrl,
-              title: "Properties",
+              title: "Continue to digitalrenter.com",
               webview_height_ratio: "full"
             }
           ]
