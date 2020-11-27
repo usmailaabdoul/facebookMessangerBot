@@ -364,9 +364,11 @@ class WebhookHelpers {
       })
 
       res = res.json()
-      if (res.event.postback) {
+
+      console.log({res})
+      // if (res.event.) {
         this.showAllListings(recipientId)
-      }
+      // }
 
     } catch (e) {
       console.log("Error sending message: " + e)
