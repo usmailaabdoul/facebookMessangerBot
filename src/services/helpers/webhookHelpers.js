@@ -1,6 +1,5 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
-const request = require('request');
 
 class WebhookHelpers {
   constructor() {
@@ -9,42 +8,48 @@ class WebhookHelpers {
     this.listOfCities = [];
   };
 
-  isTyping(recipientId) {
-    request({
-      url: "https://graph.facebook.com/v2.6/me/messages",
-      qs: { access_token: process.env.VERIFY_TOKEN },
-      method: "POST",
-      json: {
-        recipient: { id: recipientId },
-        "sender_action": "typing_on"
-      }
-    }, function (error, response, body) {
-      if (error) {
-        console.log("Error sending message: " + response.error);
-      }
-    });
+  async isTyping(recipientId) {
+    const body = {
+      recipient: { id: recipientId },
+      sender_action: "typing_on"
+    }
+
+    const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
+
+    try {
+      await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+    } catch (e) {
+      console.log("Error sending message: " + e)
+      reject(e);
+    }
   }
 
   sendMessage(recipientId, message) {
-    return new Promise(function (resolve, reject) {
-      request({
-        url: "https://graph.facebook.com/v2.6/me/messages",
-        qs: {
-          access_token: process.env.VERIFY_TOKEN
-        },
-        method: "POST",
-        json: {
-          recipient: { id: recipientId },
-          message: message,
-        }
-      }, function (error, response, body) {
-        if (error) {
-          console.log("Error sending message: " + response.error);
-          reject(response.error);
-        } else {
-          resolve(body);
-        }
-      });
+    return new Promise(async (resolve, reject) => {
+      const body = {
+        recipient: { id: recipientId },
+        message: message,
+      }
+
+      const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
+
+      try {
+        let data = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        })
+
+        data = await data.json()
+        resolve(data)
+      } catch (e) {
+        console.log("Error sending message: " + e)
+        reject(e);
+      }
     })
   }
 

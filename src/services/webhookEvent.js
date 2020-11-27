@@ -1,5 +1,5 @@
 require('dotenv').config();
-const request = require('request');
+
 const webHookHelper = require('./helpers/webhookHelpers');
 
 class WebhookEvents {
