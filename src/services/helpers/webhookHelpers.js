@@ -6,6 +6,7 @@ class WebhookHelpers {
     this.property_type = '';
     this.selectedLocation = {};
     this.listOfCities = [];
+    this.listingsUrl = '';
   };
 
   async isTyping(recipientId) {
@@ -242,6 +243,44 @@ class WebhookHelpers {
 
   }
 
+  async showAllListings(recipientId) {
+    let listingsUrl = this.listingsUrl;
+
+    let messageData = {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "button",
+          text: "Click to view all properties",
+          buttons: [
+            {
+              type: "web_url",
+              url: listingsUrl,
+              title: "Properties",
+              webview_height_ratio: "full"
+            }
+          ]
+        }
+      }
+    }
+
+    const body = {
+      recipient: { id: recipientId },
+      message: messageData,
+    }
+    const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
+
+    try {
+      await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+    } catch (e) {
+      console.log("Error sending message: " + e)
+    }
+  }
+
   async getListings(recipientId) {
     let location = `city-${this.selectedLocation.name}-${this.selectedLocation.id}`
     let property_type = this.property_type;
@@ -249,6 +288,7 @@ class WebhookHelpers {
     this.isTyping(recipientId);
     return new Promise(async (resolve, reject) => {
       let url = `https://api.digitalrenter.com/sandbox/v1/en/listings?page=1&location=${location}&property_type=${property_type}&listing_type=client_has`;
+      this.listingsUrl = url;
 
       try {
         let listings = await fetch(url, {
@@ -317,11 +357,17 @@ class WebhookHelpers {
     const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
 
     try {
-      await fetch(url, {
+      let res = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       })
+
+      res = res.json()
+      if (res.event.postback) {
+        this.showAllListings(recipientId)
+      }
+
     } catch (e) {
       console.log("Error sending message: " + e)
     }
