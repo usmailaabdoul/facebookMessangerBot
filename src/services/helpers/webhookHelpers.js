@@ -288,7 +288,7 @@ class WebhookHelpers {
     this.isTyping(recipientId);
     return new Promise(async (resolve, reject) => {
       let url = `https://api.digitalrenter.com/sandbox/v1/en/listings?page=1&location=${location}&property_type=${property_type}&listing_type=client_has`;
-      this.listingsUrl = url;
+      this.listingsUrl = `https://digitalrenter.com/en/search?house_type%5B%5D=${property_type}&location=${location}`;
 
       try {
         let listings = await fetch(url, {
@@ -357,18 +357,13 @@ class WebhookHelpers {
     const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
 
     try {
-      let res = await fetch(url, {
+      await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
       })
 
-      res = res.json()
-
-      console.log({res})
-      // if (res.event.) {
-        this.showAllListings(recipientId)
-      // }
+      this.showAllListings(recipientId)
 
     } catch (e) {
       console.log("Error sending message: " + e)
