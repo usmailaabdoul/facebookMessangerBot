@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const webHookHelper = require('./helpers/webhookHelpers');
+const messageEvents = require('./helpers/messageEvents');
 
 class WebhookEvents {
 
@@ -24,8 +25,9 @@ class WebhookEvents {
   messageEvent(event) {
     const message = event.message;
     const senderID = event.sender.id;
-    console.log("Received message from senderId: " + senderID);
-    console.log("Message is: " + JSON.stringify(message));
+    // console.log("Received message from senderId: " + senderID);
+    // console.log("Message is: " + JSON.stringify(message));
+    messageEvents.handleMessage(message);
   }
 }
 
