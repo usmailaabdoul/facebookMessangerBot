@@ -1,13 +1,13 @@
-const { messageEvent } = require("../webhookEvent");
+const fileSystem = require('./fileStorage');
 
 class MessageEvents {
-  constructor() {}
+  constructor() { }
 
   handleMessage(message) {
     if (message.hasOwnProperty('attachments')) {
       let attachments = message.attachments;
       console.log(JSON.stringify(attachments));
-      
+
       let imageAttachments = [];
       attachments.map((attachment) => {
         if (attachment.type === 'image') {
@@ -22,6 +22,16 @@ class MessageEvents {
       })
 
       console.log(imageAttachments)
+      imageAttachments.map(async (imageAttachment) => {
+        try {
+          let res = await fileSystem.downloadImage(imageAttachment);
+          console.log(res);
+        } catch (error) {
+          console.log(error)
+        }
+      });
+
+      fileSystem.cleanupDirectory()
     }
     return null
   }
