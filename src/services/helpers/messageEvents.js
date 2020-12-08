@@ -11,12 +11,12 @@ class MessageEvents {
       let imageAttachments = [];
       attachments.map((attachment) => {
         if (attachment.type === 'image') {
-          let path = attachment.url;
-          // let i = path.split('/').pop();
-          // let name = i.spilt('?').shift();
+          let path = attachment.payload.url;
+          let i = path.split('/').pop();
+          let name = i.spilt('?').shift();
 
-          // attachment.name = name;
-          console.log({path})
+          attachment.name = name;
+
           imageAttachments.push(attachment)
         }
       })
