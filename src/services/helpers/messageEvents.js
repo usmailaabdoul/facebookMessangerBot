@@ -34,7 +34,7 @@ class MessageEvents {
   }
 
   async downloadImages(imageAttachments) {
-    imageAttachments.map((imageAttachment) => {
+    imageAttachments.map(async (imageAttachment) => {
       try {
         let res = await fileSystem.downloadImage(imageAttachment);
         console.log(res);
