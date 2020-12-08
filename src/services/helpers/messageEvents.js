@@ -13,7 +13,7 @@ class MessageEvents {
         if (attachment.type === 'image') {
           let path = attachment.payload.url;
           let i = path.split('/').pop();
-          let name = i.spilt('?').shift();
+          let name = i.split('?').shift();
 
           attachment.name = name;
 
