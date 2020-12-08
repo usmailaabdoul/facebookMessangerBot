@@ -1,4 +1,5 @@
 const fileSystem = require('./fileStorage');
+const fs = require('fs');
 
 class MessageEvents {
   constructor() { }
@@ -22,18 +23,25 @@ class MessageEvents {
       })
 
       console.log(imageAttachments)
-      imageAttachments.map(async (imageAttachment) => {
-        try {
-          let res = await fileSystem.downloadImage(imageAttachment);
-          console.log(res);
-        } catch (error) {
-          console.log(error)
-        }
-      });
+      await this.downloadImages(imageAttachments)
 
-      fileSystem.cleanupDirectory()
+      if (fs.existsSync('./src/tempData')) {
+        fileSystem.cleanupDirectory()
+      } 
     }
+    
     return null
+  }
+
+  async downloadImages(imageAttachments) {
+    imageAttachments.map(async (imageAttachment) => {
+      try {
+        let res = await fileSystem.downloadImage(imageAttachment);
+        console.log(res);
+      } catch (error) {
+        console.log(error)
+      }
+    });
   }
 
 }
