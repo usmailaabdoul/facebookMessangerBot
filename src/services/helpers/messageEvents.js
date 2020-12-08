@@ -4,7 +4,7 @@ const fs = require('fs');
 class MessageEvents {
   constructor() { }
 
-  handleMessage(message) {
+  async handleMessage(message) {
     if (message.hasOwnProperty('attachments')) {
       let attachments = message.attachments;
       console.log(JSON.stringify(attachments));
@@ -29,12 +29,12 @@ class MessageEvents {
         fileSystem.cleanupDirectory()
       } 
     }
-    
+
     return null
   }
 
   async downloadImages(imageAttachments) {
-    imageAttachments.map(async (imageAttachment) => {
+    imageAttachments.map((imageAttachment) => {
       try {
         let res = await fileSystem.downloadImage(imageAttachment);
         console.log(res);
