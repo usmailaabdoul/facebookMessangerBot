@@ -23,11 +23,15 @@ class MessageEvents {
       })
 
       console.log(imageAttachments)
-      await this.downloadImages(imageAttachments)
+      try {
+        await this.downloadImages(imageAttachments)
+        if (fs.existsSync('./src/tempData')) {
+          fileSystem.cleanupDirectory()
+        }
+      } catch (error) {
+        console.log(error)
+      }
 
-      if (fs.existsSync('./src/tempData')) {
-        fileSystem.cleanupDirectory()
-      } 
     }
 
     return null
