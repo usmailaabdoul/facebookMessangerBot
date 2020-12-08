@@ -6,16 +6,16 @@ class MessageEvents {
   handleMessage(message) {
     if (message.hasOwnProperty('attachments')) {
       let attachments = message.attachments;
-      console.log({attachments});
+      console.log(JSON.stringify(attachments));
       
       let imageAttachments = [];
       attachments.map((attachment) => {
         if (attachment.type === 'image') {
           let path = attachment.url;
-          let i = path.split('/').pop();
-          let name = i.spilt('?').shift();
-          
-          attachment.name = name;
+          // let i = path.split('/').pop();
+          // let name = i.spilt('?').shift();
+
+          // attachment.name = name;
 
           imageAttachments.push(attachment)
         }
