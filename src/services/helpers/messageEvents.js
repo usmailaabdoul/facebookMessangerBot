@@ -16,7 +16,7 @@ class MessageEvents {
           // let name = i.spilt('?').shift();
 
           // attachment.name = name;
-
+          console.log({path})
           imageAttachments.push(attachment)
         }
       })
