@@ -25,9 +25,7 @@ class MessageEvents {
       console.log(imageAttachments)
       try {
         await this.downloadImages(imageAttachments)
-        if (fs.existsSync('./src/tempData')) {
           fileSystem.cleanupDirectory()
-        }
       } catch (error) {
         console.log(error)
       }
