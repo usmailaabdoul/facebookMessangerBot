@@ -30,9 +30,9 @@ class FileStorage {
             if (err) reject(err);
           });
           console.log('directory does not exist')
-          writeFile(`${global.directory}./src/tempData/${imageAttachment.name}`, buffer, () => console.log('completed'))
+          writeFile(`${global.directory}/src/tempData/${imageAttachment.name}`, buffer, () => console.log('completed'))
         }
-        resolve('Success downloaded files')
+        resolve('Success downloaded file')
       } catch (e) {
         console.log("Error sending message: " + e)
         reject(e)

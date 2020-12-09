@@ -23,11 +23,16 @@ class MessageEvents {
       })
 
       console.log(imageAttachments)
-      this.downloadImages(imageAttachments)
-        .then(() => {
-          this.uploadImages()
-          fileSystem.cleanupDirectory()
-        })
+      try {
+        let res = await this.downloadImages(imageAttachments)
+        console.log('output', res)
+        this.uploadImages(imageAttachments)
+      } catch (error) {
+        console.log({error})
+      }
+        // .then(() => {
+          // fileSystem.cleanupDirectory()
+        // })
 
     }
 
@@ -35,18 +40,25 @@ class MessageEvents {
   }
 
   async downloadImages(imageAttachments) {
-    imageAttachments.map(async (imageAttachment) => {
-      try {
-        let res = await fileSystem.downloadImage(imageAttachment);
-        console.log(res);
-      } catch (error) {
-        console.log(error)
-      }
-    });
+    return new Promise(async (resolve, reject) => {
+      imageAttachments.map(async (imageAttachment) => {
+        try {
+          let res = await fileSystem.downloadImage(imageAttachment);
+          resolve(res)
+        } catch (error) {
+          console.log(error)
+          reject(error)
+        }
+      });
+    })
   }
 
-  async uploadImages() {
+  async uploadImages(imageAttachments) {
     console.log('uploading images to DR')
+    imageAttachments.map((imageAttachment) => {
+      let file = fs.existsSync(`${global.directory}/src/tempData/${imageAttachment.name}`)
+      console.log(file)
+    })
   }
 
 }
