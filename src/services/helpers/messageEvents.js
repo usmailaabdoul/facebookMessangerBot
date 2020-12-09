@@ -24,9 +24,10 @@ class MessageEvents {
 
       console.log(imageAttachments)
       await this.downloadImages(imageAttachments)
-
-      this.uploadImages()
-      fileSystem.cleanupDirectory()
+        .then(() => {
+          this.uploadImages()
+          fileSystem.cleanupDirectory()
+        })
 
     }
 

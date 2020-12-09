@@ -11,7 +11,7 @@ const fetch = require('node-fetch');
 
 class FileStorage {
   cleanupDirectory() {
-    rmDir('./src/tempData/')
+    rmDir(`${global.directory}/src/tempData/`)
     console.log('Successfull cleaned up directory')
   }
 
@@ -22,15 +22,15 @@ class FileStorage {
         let data = await fetch(url)
         const buffer = await data.buffer();
 
-        if (existsSync('./src/tempData')) {
+        if (existsSync(`${global.directory}/src/tempData`)) {
           console.log('directory exist')
-          writeFile(`./src/tempData/${imageAttachment.name}`, buffer, () => console.log('completed'))
+          writeFile(`${global.directory}/src/tempData/${imageAttachment.name}`, buffer, () => console.log('completed'))
         } else {
-          mkdir('./src/tempData', {}, (err) => {
+          mkdir(`${global.directory}/src/tempData`, {}, (err) => {
             if (err) reject(err);
           });
           console.log('directory does not exist')
-          writeFile(`./src/tempData/${imageAttachment.name}`, buffer, () => console.log('completed'))
+          writeFile(`${global.directory}./src/tempData/${imageAttachment.name}`, buffer, () => console.log('completed'))
         }
         resolve('Success downloaded files')
       } catch (e) {
