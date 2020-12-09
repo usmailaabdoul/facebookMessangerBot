@@ -30,9 +30,6 @@ class MessageEvents {
       } catch (error) {
         console.log({error})
       }
-        // .then(() => {
-          // fileSystem.cleanupDirectory()
-        // })
 
     }
 
@@ -59,6 +56,8 @@ class MessageEvents {
       let file = fs.existsSync(`${global.directory}/src/tempData/${imageAttachment.name}`)
       console.log(file)
     })
+
+    // fileSystem.cleanupDirectory()
   }
 
 }
