@@ -23,12 +23,10 @@ class MessageEvents {
       })
 
       console.log(imageAttachments)
-      try {
-        await this.downloadImages(imageAttachments)
-          fileSystem.cleanupDirectory()
-      } catch (error) {
-        console.log(error)
-      }
+      await this.downloadImages(imageAttachments)
+
+      this.uploadImages()
+      fileSystem.cleanupDirectory()
 
     }
 
@@ -44,6 +42,10 @@ class MessageEvents {
         console.log(error)
       }
     });
+  }
+
+  async uploadImages() {
+    console.log('uploading images to DR')
   }
 
 }

@@ -23,11 +23,13 @@ class FileStorage {
         const buffer = await data.buffer();
 
         if (existsSync('./src/tempData')) {
+          console.log('directory exist')
           writeFile(`./src/tempData/${imageAttachment.name}`, buffer, () => console.log('completed'))
         } else {
           mkdir('./src/tempData', {}, (err) => {
             if (err) reject(err);
           });
+          console.log('directory does not exist')
           writeFile(`./src/tempData/${imageAttachment.name}`, buffer, () => console.log('completed'))
         }
         resolve('Success downloaded files')
