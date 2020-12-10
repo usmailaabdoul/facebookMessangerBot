@@ -27,9 +27,11 @@ class WebhookEvents {
       webHookHelper.selectRequestType(senderID, payload)
     } 
     else if (payload.includes('REQUEST_PROPERTY')) {
+      console.log({payload})
       webHookHelper.chooseLocation(senderID, payload)
     } 
     else if (payload.includes('REQUEST_CITY')) {
+      console.log({payload});
       webHookHelper.showListings(senderID, payload)
     } else {
       console.log(payload)
