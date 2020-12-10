@@ -11,30 +11,21 @@ class WebhookEvents {
     console.log(payload);
     console.log('property', payload.includes('REQUEST_PROPERTY'))
     console.log('city', payload.includes('REQUEST_CITY'))
+    let propertyRequest = payload.includes('REQUEST_PROPERTY');
+    let cityRequest = payload.includes('REQUEST_CITY');
 
     if (payload === 'WELCOME') {
       webHookHelper.welcomeUser(senderID);
-    }
-    // else if (payload === 'APARTMENT' || payload === 'STUDIO' || payload === 'SINGLE_ROOM' || payload === 'STORE' || payload === 'DUPLEX' || payload === 'QUEST_HOUSE') {
-    //   // global.property_type = payload;
-    //   webHookHelper.chooseLocation(senderID, payload);
-    // } else if (payload === 'BUEA' || payload === 'DOUALA' || payload === 'LIMBE' || payload === 'KUMBA' || payload === 'KRIBI' || payload === 'YAOUNDE') {
-    //   webHookHelper.showListings(senderID, payload)
-    // } else {
-    //   console.log(payload);
-    // }
-    else if (payload === 'POST' || 'REQUEST') {
+    } else if (payload === 'POST' || 'REQUEST') {
       webHookHelper.selectRequestType(senderID, payload)
-    } 
-    else if (payload.includes('REQUEST_PROPERTY')) {
+    } else if (propertyRequest) {
       console.log({payload})
       webHookHelper.chooseLocation(senderID, payload)
-    } 
-    else if (payload.includes('REQUEST_CITY')) {
+    } else if (cityRequest) {
       console.log({payload});
       webHookHelper.showListings(senderID, payload)
     } else {
-      console.log(payload)
+      console.log('nothing found', payload)
     }
   }
 
@@ -50,3 +41,12 @@ class WebhookEvents {
 const webhookEvents = new WebhookEvents();
 
 module.exports = webhookEvents;
+
+// else if (payload === 'APARTMENT' || payload === 'STUDIO' || payload === 'SINGLE_ROOM' || payload === 'STORE' || payload === 'DUPLEX' || payload === 'QUEST_HOUSE') {
+    //   // global.property_type = payload;
+    //   webHookHelper.chooseLocation(senderID, payload);
+    // } else if (payload === 'BUEA' || payload === 'DOUALA' || payload === 'LIMBE' || payload === 'KUMBA' || payload === 'KRIBI' || payload === 'YAOUNDE') {
+    //   webHookHelper.showListings(senderID, payload)
+    // } else {
+    //   console.log(payload);
+    // }
