@@ -264,7 +264,7 @@ class WebhookHelpers {
       return elements
     }
 
-    console.log(formatButtons(cities))
+    console.log(JSON.stringify(formatButtons(cities)))
 
     let messageData = {
       attachment: {
