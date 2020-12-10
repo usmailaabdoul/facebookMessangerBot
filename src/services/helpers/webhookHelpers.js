@@ -418,7 +418,7 @@ class WebhookHelpers {
     }
   }
 
-  selectRequestType(payload) {
+  selectRequestType(recipientId, payload) {
     if (payload === 'REQUEST') {
       this.propertyType(recipientId);
     } else if (payload === 'POST') {
