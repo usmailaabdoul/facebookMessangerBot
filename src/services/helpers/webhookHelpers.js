@@ -71,17 +71,17 @@ class WebhookHelpers {
                 {
                   type: "postback",
                   title: "Apartment",
-                  payload: "APARTMENT"
+                  payload: "REQUEST_PROPERTY_APARTMENT"
                 },
                 {
                   type: "postback",
                   title: "Studio",
-                  payload: "STUDIO"
+                  payload: "REQUEST_PROPERTY_STUDIO"
                 },
                 {
                   type: "postback",
                   title: "Single room",
-                  payload: "SINGLE_ROOM"
+                  payload: "REQUEST_PROPERTY_SINGLE_ROOM"
                 }
               ]
             },
@@ -96,18 +96,63 @@ class WebhookHelpers {
                 {
                   type: "postback",
                   title: "Store",
-                  payload: "STORE"
+                  payload: "REQUEST_PROPERTY_STORE"
                 },
                 {
                   type: "postback",
                   title: "Duplex",
-                  payload: "DUPLEX"
+                  payload: "REQUEST_PROPERTY_DUPLEX"
                 },
                 {
                   type: "postback",
                   title: "Quest house",
-                  payload: "QUEST_HOUSE"
+                  payload: "REQUEST_PROPERTY_QUEST_HOUSE"
                 }
+              ]
+            },
+          ]
+        }
+      }
+    }
+
+    const body = {
+      recipient: { id: recipientId },
+      message: messageData,
+    }
+    const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
+
+    try {
+      await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+
+    } catch (e) {
+      console.log("Error sending message: " + e)
+    }
+  }
+
+  async requestType(recipientId) {
+    let messageData = {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [{
+              title: "Choose an action!",
+              subtitle: "What do you want DR to help you with?",
+              buttons: [
+                {
+                  type: "postback",
+                  title: "Advertise a property",
+                  payload: "POST"
+                },
+                {
+                  type: "postback",
+                  title: "Search for a property",
+                  payload: "REQUEST"
+                },
               ]
             },
           ]
@@ -148,7 +193,7 @@ class WebhookHelpers {
 
       this.isTyping(recipientId);
       this.sendMessage(recipientId, { text: message }).then(() => {
-        this.propertyType(recipientId);
+        this.requestType(recipientId);
       });
     } catch (e) {
       console.log("Error sending message: " + e)
@@ -186,7 +231,9 @@ class WebhookHelpers {
   }
 
   async chooseLocation(recipientId, property_type) {
-    this.property_type = property_type;
+    let propertyType = property_type.split('_').pop();
+
+    this.property_type = propertyType;
 
     this.isTyping(recipientId);
     let cities = await this.getLocations();
@@ -206,7 +253,7 @@ class WebhookHelpers {
             return {
               type: "postback",
               title: button.name,
-              payload: button.name.toUpperCase()
+              payload: `REQUEST_CITY_${button.name.toUpperCase()}`
             }
           })
         }
@@ -307,8 +354,9 @@ class WebhookHelpers {
   }
 
   async showListings(recipientId, location) {
+    let selectedLocation = location.split('_').pop();
 
-    let index = this.listOfCities.findIndex((city) => city.name.toLowerCase() === location.toLowerCase())
+    let index = this.listOfCities.findIndex((city) => city.name.toLowerCase() === selectedLocation.toLowerCase())
 
     if (index > -1) {
       this.selectedLocation = this.listOfCities[index]
@@ -370,6 +418,13 @@ class WebhookHelpers {
     }
   }
 
+  selectRequestType(payload) {
+    if (payload === 'REQUEST') {
+      this.propertyType(recipientId);
+    } else if (payload === 'POST') {
+      //TODO: walk user through the process of posting a property on DR
+    }
+  }
 }
 
 const webhookHelpers = new WebhookHelpers();
