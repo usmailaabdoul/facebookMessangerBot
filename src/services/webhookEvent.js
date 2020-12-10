@@ -16,17 +16,21 @@ class WebhookEvents {
 
     if (payload === 'WELCOME') {
       webHookHelper.welcomeUser(senderID);
-    } else if (payload === 'POST' || 'REQUEST') {
+    } 
+    if (payload === 'POST' || 'REQUEST') {
       webHookHelper.selectRequestType(senderID, payload)
-    } else if (propertyRequest) {
+    } 
+    if (propertyRequest) {
       console.log({payload})
       webHookHelper.chooseLocation(senderID, payload)
-    } else if (cityRequest) {
+    } 
+    if (cityRequest) {
       console.log({payload});
       webHookHelper.showListings(senderID, payload)
-    } else {
-      console.log('nothing found', payload)
-    }
+    } 
+    // else {
+    //   console.log('nothing found', payload)
+    // }
   }
 
   messageEvent(event) {
