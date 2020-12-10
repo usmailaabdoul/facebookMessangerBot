@@ -9,10 +9,10 @@ class WebhookEvents {
     const senderID = event.sender.id;
     const payload = event.postback.payload;
     console.log(payload);
-    console.log('property', payload.includes('REQUEST_PROPERTY'))
-    console.log('city', payload.includes('REQUEST_CITY'))
     let propertyRequest = payload.includes('REQUEST_PROPERTY');
     let cityRequest = payload.includes('REQUEST_CITY');
+    console.log('property', propertyRequest)
+    console.log('city', cityRequest)
 
     if (payload === 'WELCOME') {
       webHookHelper.welcomeUser(senderID);
