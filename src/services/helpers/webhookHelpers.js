@@ -234,7 +234,7 @@ class WebhookHelpers {
     let propertyType = property_type.split('_').pop();
 
     console.log({propertyType});
-    
+
     this.property_type = propertyType;
 
     this.isTyping(recipientId);
@@ -263,6 +263,8 @@ class WebhookHelpers {
 
       return elements
     }
+
+    console.log(formatButtons(cities))
 
     let messageData = {
       attachment: {
