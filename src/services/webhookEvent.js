@@ -22,7 +22,7 @@ class WebhookEvents {
     //   console.log(payload);
     // }
     else if (payload === 'POST' || 'REQUEST') {
-      webHookHelper.selectRequestType(payload)
+      webHookHelper.selectRequestType(senderID, payload)
     } 
     else if (payload.includes('REQUEST_PROPERTY')) {
       webHookHelper.chooseLocation(senderID, payload)
