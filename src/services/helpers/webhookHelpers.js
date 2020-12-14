@@ -6,6 +6,7 @@ const PostPropertyHelper = require('./postPropertyHelper');
 
 const isTyping = require('../interactions/isTyping');
 const sendMessage = require('../interactions/sendMessage');
+const requestType = require('../interactions/requestType');
 
 class WebhookHelpers {
 
@@ -24,7 +25,7 @@ class WebhookHelpers {
 
       isTyping(recipientId);
       sendMessage(recipientId, { text: message }).then(() => {
-        RequestPropertyHelper.requestType(recipientId);
+        requestType(recipientId);
       });
     } catch (e) {
       console.log("Error sending message: " + e)

@@ -1,5 +1,6 @@
 const isTyping = require('../interactions/isTyping');
 const sendMessage = require('../interactions/sendMessage');
+const requestType = require('../interactions/requestType');
 
 class PostPropertyHelper {
   postProperty(recipientId) {
@@ -7,7 +8,7 @@ class PostPropertyHelper {
 
     isTyping(recipientId);
       sendMessage(recipientId, { text: message }).then(() => {
-        this.requestType(recipientId);
+        requestType(recipientId);
       });
   }
 }
