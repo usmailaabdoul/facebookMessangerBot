@@ -233,8 +233,6 @@ class WebhookHelpers {
   async chooseLocation(recipientId, property_type) {
     let propertyType = property_type.split('_').pop();
 
-    console.log({propertyType});
-
     this.property_type = propertyType;
 
     this.isTyping(recipientId);
@@ -263,8 +261,6 @@ class WebhookHelpers {
 
       return elements
     }
-
-    console.log(JSON.stringify(formatButtons(cities)))
 
     let messageData = {
       attachment: {
@@ -422,11 +418,21 @@ class WebhookHelpers {
     }
   }
 
+  postProperty(recipientId) {
+    const message = 'This service temporaryly not available';
+
+    this.isTyping(recipientId);
+      this.sendMessage(recipientId, { text: message }).then(() => {
+        this.requestType(recipientId);
+      });
+  }
+
   selectRequestType(recipientId, payload) {
     if (payload === 'REQUEST') {
       this.propertyType(recipientId);
     } else if (payload === 'POST') {
       //TODO: walk user through the process of posting a property on DR
+      this.postProperty(recipientId)
     }
   }
 }
