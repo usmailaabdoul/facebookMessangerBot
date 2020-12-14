@@ -7,6 +7,7 @@ class WebhookHelpers {
     this.selectedLocation = {};
     this.listOfCities = [];
     this.listingsUrl = '';
+    this.token = process.env.DR_TOKEN
   };
 
   async isTyping(recipientId) {
@@ -26,6 +27,28 @@ class WebhookHelpers {
     } catch (e) {
       console.log("Error sending message: " + e)
       reject(e);
+    }
+  }
+
+  async welcomeUser(recipientId) {
+    const url = `https://graph.facebook.com/v2.6/${recipientId}?fields=first_name,last_name&access_token=${process.env.VERIFY_TOKEN}`
+
+    try {
+      let user = await fetch(url, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      })
+      user = await user.json()
+      console.log({ user })
+      let greeting = `Hi ${user.first_name}.`;
+      let message = `${greeting}\n\nI'm Square, your virtual assistant from Digital renter.`;
+
+      this.isTyping(recipientId);
+      this.sendMessage(recipientId, { text: message }).then(() => {
+        this.requestType(recipientId);
+      });
+    } catch (e) {
+      console.log("Error sending message: " + e)
     }
   }
 
@@ -52,85 +75,6 @@ class WebhookHelpers {
         reject(e);
       }
     })
-  }
-
-  sendGenericMessage(recipientId, responseBody) {
-  }
-
-  async propertyType(recipientId) {
-    let messageData = {
-      attachment: {
-        type: "template",
-        payload: {
-          template_type: "generic",
-          elements: [
-            {
-              title: "What kind of property are you looking for?",
-              subtitle: "Swipe left/right for more options.",
-              buttons: [
-                {
-                  type: "postback",
-                  title: "Apartment",
-                  payload: "REQUEST_PROPERTY_APARTMENT"
-                },
-                {
-                  type: "postback",
-                  title: "Studio",
-                  payload: "REQUEST_PROPERTY_STUDIO"
-                },
-                {
-                  type: "postback",
-                  title: "Single room",
-                  payload: "REQUEST_PROPERTY_SINGLE_ROOM"
-                }
-              ]
-            },
-            {
-              title: "Haven't found what you are looking for? chechout our website",
-              default_action: {
-                type: "web_url",
-                url: "https://digitalrenter.com/",
-                webview_height_ratio: "FULL",
-              },
-              buttons: [
-                {
-                  type: "postback",
-                  title: "Store",
-                  payload: "REQUEST_PROPERTY_STORE"
-                },
-                {
-                  type: "postback",
-                  title: "Duplex",
-                  payload: "REQUEST_PROPERTY_DUPLEX"
-                },
-                {
-                  type: "postback",
-                  title: "Quest house",
-                  payload: "REQUEST_PROPERTY_QUEST_HOUSE"
-                }
-              ]
-            },
-          ]
-        }
-      }
-    }
-
-    const body = {
-      recipient: { id: recipientId },
-      message: messageData,
-    }
-    const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
-
-    try {
-      await fetch(url, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      })
-
-    } catch (e) {
-      console.log("Error sending message: " + e)
-    }
   }
 
   async requestType(recipientId) {
@@ -178,25 +122,92 @@ class WebhookHelpers {
     }
   }
 
-  async welcomeUser(recipientId) {
-    const url = `https://graph.facebook.com/v2.6/${recipientId}?fields=first_name,last_name&access_token=${process.env.VERIFY_TOKEN}`
+  postProperty(recipientId) {
+    const message = 'This service temporarily not available!';
 
-    try {
-      let user = await fetch(url, {
-        method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
-      })
-      user = await user.json()
-
-      let greeting = `Hi ${user.first_name}.`;
-      let message = `${greeting} \n\n I'm Square, your virtual assistant from Digital renter.`;
-
-      this.isTyping(recipientId);
+    this.isTyping(recipientId);
       this.sendMessage(recipientId, { text: message }).then(() => {
         this.requestType(recipientId);
       });
+  }
+
+  async propertyType(recipientId) {
+    let messageData = {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [
+            {
+              title: "What kind of property are you looking for?",
+              subtitle: "Swipe left/right for more options.",
+              buttons: [
+                {
+                  type: "postback",
+                  title: "Apartment",
+                  payload: "REQUEST_PROPERTY_APARTMENT"
+                },
+                {
+                  type: "postback",
+                  title: "Studio",
+                  payload: "REQUEST_PROPERTY_STUDIO"
+                },
+                {
+                  type: "postback",
+                  title: "Single room",
+                  payload: "REQUEST_PROPERTY_SINGLE_ROOM"
+                }
+              ]
+            },
+            {
+              title: "Here are more options you can select from.",
+              buttons: [
+                {
+                  type: "postback",
+                  title: "Store",
+                  payload: "REQUEST_PROPERTY_STORE"
+                },
+                {
+                  type: "postback",
+                  title: "Duplex",
+                  payload: "REQUEST_PROPERTY_DUPLEX"
+                },
+                {
+                  type: "postback",
+                  title: "Quest house",
+                  payload: "REQUEST_PROPERTY_QUEST_HOUSE"
+                }
+              ]
+            },
+          ]
+        }
+      }
+    }
+
+    const body = {
+      recipient: { id: recipientId },
+      message: messageData,
+    }
+    const url = `https://graph.facebook.com/v2.6/me/messages?access_token=${process.env.VERIFY_TOKEN}`
+
+    try {
+      await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+
     } catch (e) {
       console.log("Error sending message: " + e)
+    }
+  }
+
+  selectRequestType(recipientId, payload) {
+    if (payload === 'REQUEST') {
+      this.propertyType(recipientId);
+    } else if (payload === 'POST') {
+      //TODO: walk user through the process of posting a property on DR
+      this.postProperty(recipientId)
     }
   }
 
@@ -205,12 +216,15 @@ class WebhookHelpers {
       const fixCities = ['Buea', 'Douala', 'Limbe', 'Kumba', 'Kribi', 'Yaounde'];
       let selectedCities = [];
 
-      let url = 'https://api.digitalrenter.com/sandbox/v1/en/locations/cities'
+      let url = 'https://api.digitalrenter.com/v1/en/locations/cities'
 
       try {
         let cities = await fetch(url, {
           method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 
+            AppToken:  this.token,
+            'Content-Type': 'application/json' 
+          }
         })
         cities = await cities.json()
 
@@ -246,9 +260,11 @@ class WebhookHelpers {
         newElements.push(temp)
       }
 
-      const elements = newElements.map((element) => {
+      const elements = newElements.map((element, i) => {
+        const message = i > 0 ? 'Here are more locations!' : "In which location?";
+
         return {
-          title: "In which location?",
+          title: message,
           buttons: element.map((button) => {
             return {
               type: "postback",
@@ -298,7 +314,7 @@ class WebhookHelpers {
         type: "template",
         payload: {
           template_type: "button",
-          text: "Haven't found what you need? \n View more properties on Digital Renter",
+          text: "Haven't found what you need?\nView more properties on Digital Renter",
           buttons: [
             {
               type: "web_url",
@@ -334,13 +350,17 @@ class WebhookHelpers {
 
     this.isTyping(recipientId);
     return new Promise(async (resolve, reject) => {
-      let url = `https://api.digitalrenter.com/sandbox/v1/en/listings?page=1&location=${location}&property_type=${property_type}&listing_type=client_has`;
-      this.listingsUrl = `https://digitalrenter.com/en/search?house_type%5B%5D=${property_type}&location=${location}`;
+      let url = `https://api.digitalrenter.com/v1/en/listings?page=1&location=${location}&property_type=${property_type}&listing_type=client_has&order=created_at`;
+
+      this.listingsUrl = `https://digitalrenter.com/en/search?house_type[]=${property_type}&location=${location}`;
 
       try {
         let listings = await fetch(url, {
           method: 'GET',
-          headers: { 'Content-Type': 'application/json' }
+          headers: { 
+            AppToken:  this.token,
+            'Content-Type': 'application/json'
+          }
         })
         listings = await listings.json()
 
@@ -366,27 +386,36 @@ class WebhookHelpers {
 
     const listingsElement = [];
 
-    listings.map((listing) => {
-      let quarter = listing.quarter !== null ? listing.quarter.name : '';
-      let image_url = listing.images.length > 0 ? listing.images[0].path : 'https://digitalrenter.com/front/img/house-search.png';
-      let owner = listing.manager_or_estate_name !== null ? listing.manager_or_estate_name : '';
+    if (listings.length > 0) {
+      listings.map((listing) => {
+        let quarter = listing.quarter !== null ? listing.quarter.name : '';
+        let image_url = listing.images.length > 0 ? listing.images[0].path : 'https://digitalrenter.com/front/img/house-search.png';
 
+        let element = {
+          title: `${listing.house_type.name} to ${listing.operation} in ${quarter}`,
+          image_url: image_url,
+          subtitle: `Price: ${Number(listing.price).toLocaleString()} FCFA per ${listing.billing_cycle.name}.\nQuarter: ${quarter}.`,
+          buttons: [
+            {
+              type: "web_url",
+              url: `https://digitalrenter.com/en/ad/${listing.id}`,
+              webview_height_ratio: "FULL",
+              title: "More Details"
+            },
+          ]
+        }
+
+        listingsElement.push(element)
+      })
+    } else {
       let element = {
-        title: listing.headline,
-        image_url: image_url,
-        subtitle: `Price: ${listing.price} \n Quarter: ${quarter} \n Owner: ${owner}`,
-        buttons: [
-          {
-            type: "web_url",
-            url: `https://digitalrenter.com/en/ad/${listing.id}`,
-            webview_height_ratio: "FULL",
-            title: "More Details"
-          },
-        ]
+        title: 'Oops, no properties matching this request in this location.',
+        image_url: 'https://digitalrenter.s3.us-east-2.amazonaws.com/banner-ads/item-not-found.png',
+        subtitle: 'Check other locations above for more options.',
       }
 
       listingsElement.push(element)
-    })
+    }
 
     let messageData = {
       "attachment": {
@@ -418,23 +447,6 @@ class WebhookHelpers {
     }
   }
 
-  postProperty(recipientId) {
-    const message = 'This service temporaryly not available';
-
-    this.isTyping(recipientId);
-      this.sendMessage(recipientId, { text: message }).then(() => {
-        this.requestType(recipientId);
-      });
-  }
-
-  selectRequestType(recipientId, payload) {
-    if (payload === 'REQUEST') {
-      this.propertyType(recipientId);
-    } else if (payload === 'POST') {
-      //TODO: walk user through the process of posting a property on DR
-      this.postProperty(recipientId)
-    }
-  }
 }
 
 const webhookHelpers = new WebhookHelpers();
