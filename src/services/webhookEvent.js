@@ -19,10 +19,10 @@ class WebhookEvents {
       webHookHelper.selectRequestType(senderID, payload)
     } 
     if (propertyRequest) {
-      webHookHelper.chooseLocation(senderID, payload)
+      webHookHelper.selectListingLocation(senderID, payload)
     } 
     if (cityRequest) {
-      webHookHelper.showListings(senderID, payload)
+      webHookHelper.showRequestedListings(senderID, payload)
     }
   }
 
