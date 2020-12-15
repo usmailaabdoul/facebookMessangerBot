@@ -8,7 +8,7 @@ class PostPropertyHelper {
 
     isTyping(recipientId);
     sendMessage(recipientId, { text: message }).then(() => {
-      shareDRLink(recipientId);
+      this.shareDRLink(recipientId);
     });
   }
 
