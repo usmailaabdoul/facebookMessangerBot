@@ -48,11 +48,8 @@ class PostPropertyHelper {
         body: JSON.stringify(body)
       })
 
-      let message = ''
       isTyping(recipientId);
-      // sendMessage(recipientId, { text: message }).then(() => {
       requestType(recipientId);
-      // });
     } catch (e) {
       console.log("Error sending message: " + e)
     }
