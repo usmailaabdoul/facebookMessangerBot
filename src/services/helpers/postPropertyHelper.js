@@ -6,7 +6,7 @@ const requestType = require('../interactions/requestType');
 
 class PostPropertyHelper {
   postProperty(recipientId) {
-    const message = 'Post a property on DR in 3 simple steps:\n - Download the App.\n - Create a free account.\n - Post/Advertise your property(house/land).\n - Share and wait for clients in your inbox.';
+    const message = 'Post a property on DR in 4 simple steps:\n - Download the App.\n - Create a free account.\n - Post/Advertise your property(house/land).\n - Share and wait for clients in your inbox.';
 
     isTyping(recipientId);
     sendMessage(recipientId, { text: message }).then(() => {
@@ -22,12 +22,12 @@ class PostPropertyHelper {
         type: "template",
         payload: {
           template_type: "button",
-          text: "Download App",
+          text: "Get started",
           buttons: [
             {
               type: "web_url",
               url: 'https://play.google.com/store/apps/details?id=com.digitalrenter',
-              title: "Continue to digitalrenter.com",
+              title: "Download App",
               webview_height_ratio: "full"
             }
           ]
