@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 const isTyping = require('../interactions/isTyping');
 const sendMessage = require('../interactions/sendMessage');
 const requestType = require('../interactions/requestType');
