@@ -12,7 +12,7 @@ class PostPropertyHelper {
     });
   }
 
-  shareDRLink(recipientId) {
+  async shareDRLink(recipientId) {
     isTyping(recipientId);
 
     let messageData = {
